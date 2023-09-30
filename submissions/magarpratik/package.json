@@ -1,0 +1,32 @@
+{
+  "name": "magarpratik",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "build": "rm -rf ./lib && npm run lint && tsc",
+    "test": "npm run build && ava ./tests/*.test.ts"
+  },
+  "ava": {
+    "typescript": {
+      "rewritePaths": {
+        "tests/": "lib/tests/"
+      },
+      "compile": "tsc"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@ava/typescript": "^4.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "ava": "^5.3.1",
+    "eslint": "^8.50.0"
+  }
+}
