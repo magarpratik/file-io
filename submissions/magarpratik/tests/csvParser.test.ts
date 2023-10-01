@@ -1,25 +1,46 @@
 import test from "ava";
-import { CSVParser } from "../src/csvParser";
+import { CSVParser, ParsedCSV } from "../src/csvParser";
+
+const csvPath = "./testCSV/sample.csv";
 
 type testCase = {
   title: string;
+  expectedParsedCSV: ParsedCSV[];
 };
 
 const testCases: testCase[] = [
   {
-    title: "testing testing",
+    title: "Given a valid csv, parse it and return it as an array of objects",
+    expectedParsedCSV: [
+      {
+        track_name: "Track 1",
+        key: "C",
+      },
+      {
+        track_name: "Track 2",
+        key: "D",
+      },
+      {
+        track_name: "Track 3",
+        key: "E",
+      },
+      {
+        track_name: "Track 4",
+        key: "C",
+      },
+    ],
   },
 ];
 
-testCases.forEach((tc) => {
-  test(tc.title, (t) => {
+testCases.forEach(async (tc) => {
+  test(tc.title, async (t) => {
     // Arrange
     const csvParser = new CSVParser();
 
     // Act
-    csvParser.parse();
+    const result = await csvParser.parse(csvPath);
 
     // Assert
-    t.true(true);
+    t.deepEqual(result, tc.expectedParsedCSV);
   });
 });
