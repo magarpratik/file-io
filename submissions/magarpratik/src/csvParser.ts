@@ -1,14 +1,18 @@
-export type ParsedCSV = { [x: string]: string };
+import fs from "fs";
+import csv from "csv-parser";
+
+export type ParsedCSV = { [key: string]: string };
 
 export class CSVParser {
-  public async parse(csvPath: string): Promise<ParsedCSV[]> {
-    const result: ParsedCSV[] = [{}];
+  public async parse(filePath: string): Promise<ParsedCSV[]> {
+    const result: ParsedCSV[] = [];
 
-    const msg = await Promise.resolve("Hello World!");
-
-    console.log(msg);
-    console.log(csvPath);
-
-    return result;
+    return new Promise((res, rej) => {
+      fs.createReadStream(filePath)
+        .pipe(csv())
+        .on("data", (data) => result.push(data))
+        .on("end", () => res(result))
+        .on("error", (error) => rej(error));
+    });
   }
 }

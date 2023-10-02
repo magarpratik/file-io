@@ -1,7 +1,7 @@
 import test from "ava";
 import { CSVParser, ParsedCSV } from "../src/csvParser";
 
-const csvPath = "./testCSV/sample.csv";
+const csvPath = "./tests/testCSV/sample.csv";
 
 type testCase = {
   title: string;
@@ -38,9 +38,9 @@ testCases.forEach(async (tc) => {
     const csvParser = new CSVParser();
 
     // Act
-    const result = await csvParser.parse(csvPath);
+    const parsedCSV = await csvParser.parse(csvPath);
 
     // Assert
-    t.deepEqual(result, tc.expectedParsedCSV);
+    t.deepEqual(parsedCSV, tc.expectedParsedCSV);
   });
 });
